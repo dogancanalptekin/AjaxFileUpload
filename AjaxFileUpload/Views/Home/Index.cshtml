@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link href="~/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/bower_components/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/bower_components/bootstrap-fileinput/js/fileinput.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div id="alert" class="alert alert-success" style="display: none;">
+                Dosyalar yüklendi
+            </div>
+            <br/>
+            
+            <form action="" method="post">
+                <input type="hidden" id="productid" name="productid" value="2"/>
+                <input type="file" id="files" name="files" multiple/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+        $("#files").fileinput({
+            language: 'tr',
+            uploadAsync: true,
+            dropZoneTitle: "Resimlerinizi buraya bırakabilirsiniz",
+            browseLabel: "Resim Seçiniz",
+            uploadLabel: "Karşıya Yükle",
+            uploadUrl: "@Url.Action("Index","Home")",
+            allowedFileExtensions: ['jpg', 'png', 'gif'],
+            maxFileCount: 10,
+            resizeImage: true,
+            maxImageWidth: 800,
+            maxImageHeight: 600,
+            resizePreference: 'width',
+            resizeImageQuality: 0.75,
+            uploadExtraData: {id:$("#productid").val()}
+        });
+
+        $("#files").on('filebatchuploadcomplete',
+            function() {
+                $("#alert").css({"display":"block"})
+            });
+
+    </script>
+
+</body>
+</html>
